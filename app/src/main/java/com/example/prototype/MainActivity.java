@@ -1,9 +1,15 @@
 package com.example.prototype;
 
+import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -11,13 +17,15 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
     private ListView listView;
     boolean isPlaying = false;
     TextView seekBarHint;
     MediaPlayer mp;
     SeekBar seekBar;
+    SensorManager sensorManager;
+    Sensor accelerometer;
 
     //https://stackoverflow.com/questions/4777272/android-listview-with-different-layouts-for-each-row
     @Override
@@ -55,6 +63,12 @@ public class MainActivity extends AppCompatActivity {
         seekBarHint = voiceLayout.findViewById(R.id.textView);
         seekBar = voiceLayout.findViewById(R.id.seekBar);
         seekBar();
+
+        Log.d("MainActivity", "onCreate: Initializing Sensor Service");
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        sensorManager.registerListener(MainActivity.this, accelerometer, SensorManager.SENSOR_DELAY_GAME);
+        Log.d("MainActivity", "onCreate: Registered accelerometer listener");
     }
 
     //Timeline soll im Progress mitlaufen -> Funktioniert nicht
@@ -112,8 +126,7 @@ public class MainActivity extends AppCompatActivity {
                     mp.pause();
                     isPlaying = false;
                 }
-                else
-                {
+                else {
                     if (mp == null) {
                         //initalisieren
                         mp = MediaPlayer.create(this, R.raw.sound);
@@ -123,5 +136,31 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
         }
+    }
+
+    //sobald das Smartphone in x Richtung um mehr als +/- 10 bewegt wird, wird die Nachricht abgespielt bzw. gestoppt
+    //https://www.youtube.com/watch?v=pkT7DU1Yo9Q
+    @Override
+    public void onSensorChanged(SensorEvent sensorEvent) {
+        Log.d("MainActivity", "onSensorChanged: x: " +  sensorEvent.values[0] + " y: " + sensorEvent.values[1] + " z: " + sensorEvent.values[2]);
+        if (sensorEvent.values[0] <= -10){
+            if (mp == null) {
+                mp = MediaPlayer.create(this, R.raw.sound);
+            }
+            mp.start();
+            isPlaying = true;
+        }
+        if (sensorEvent.values[0] > 10){
+            if(isPlaying)
+            {
+                mp.pause();
+                isPlaying = false;
+            }
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
+
     }
 }
