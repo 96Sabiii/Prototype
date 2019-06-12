@@ -138,24 +138,31 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
     }
 
-    //sobald das Smartphone in x Richtung um mehr als +/- 10 bewegt wird, wird die Nachricht abgespielt bzw. gestoppt
-    //https://www.youtube.com/watch?v=pkT7DU1Yo9Q
+    //sobald das Smartphone in z Richtung um mehr als +/- 10 bewegt wird, wird die Nachricht abgespielt bzw. gestoppt
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         Log.d("MainActivity", "onSensorChanged: x: " +  sensorEvent.values[0] + " y: " + sensorEvent.values[1] + " z: " + sensorEvent.values[2]);
-        if (sensorEvent.values[0] <= -10){
+        if (sensorEvent.values[2] <= -10){
             if (mp == null) {
                 mp = MediaPlayer.create(this, R.raw.sound);
             }
             mp.start();
             isPlaying = true;
         }
-        if (sensorEvent.values[0] > 10){
+        if (sensorEvent.values[2] > 10){
             if(isPlaying)
             {
                 mp.pause();
                 isPlaying = false;
             }
+        }
+        if (sensorEvent.values[0] <= -10){
+            //Voraussetzung = spielt bereits!!
+            Log.d("MainActivity", "vorspulen");
+        }
+        if (sensorEvent.values[0] > 10){
+            //Voraussetzung = spielt bereits!!
+            Log.d("MainActivity", "zurückspulen");
         }
     }
 
