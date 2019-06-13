@@ -138,7 +138,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
     }
 
-    //sobald das Smartphone in z Richtung um mehr als +/- 10 bewegt wird, wird die Nachricht abgespielt bzw. gestoppt
+    //sobald das Smartphone in z-Richtung um mehr als +/- 10 bewegt wird, wird die Nachricht abgespielt bzw. gestoppt
+    //wird das Smartphone während des Abspiels in x-Richtung mehr als +/- 10 bewegt, so wird die Nachricht vor- bzw. zurückgespult
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         Log.d("MainActivity", "onSensorChanged: x: " +  sensorEvent.values[0] + " y: " + sensorEvent.values[1] + " z: " + sensorEvent.values[2]);
@@ -150,19 +151,20 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             isPlaying = true;
         }
         if (sensorEvent.values[2] > 10){
-            if(isPlaying)
-            {
+            if(isPlaying) {
                 mp.pause();
                 isPlaying = false;
             }
         }
         if (sensorEvent.values[0] <= -10){
-            //Voraussetzung = spielt bereits!!
-            Log.d("MainActivity", "vorspulen");
+            if (isPlaying){
+                Log.d("MainActivity", "vorspulen");
+            }
         }
         if (sensorEvent.values[0] > 10){
-            //Voraussetzung = spielt bereits!!
-            Log.d("MainActivity", "zurückspulen");
+            if (isPlaying){
+                Log.d("MainActivity", "zurückspulen");
+            }
         }
     }
 
