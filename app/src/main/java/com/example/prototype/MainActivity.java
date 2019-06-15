@@ -5,6 +5,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +27,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     SeekBar seekBar;
     SensorManager sensorManager;
     Sensor accelerometer;
+    Context context;
+    AudioManager am;
 
     //https://stackoverflow.com/questions/4777272/android-listview-with-different-layouts-for-each-row
     @Override
@@ -62,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         RelativeLayout voiceLayout = (RelativeLayout) View.inflate(this, R.layout.their_voice, null);
         seekBarHint = voiceLayout.findViewById(R.id.textView);
         seekBar = voiceLayout.findViewById(R.id.seekBar);
-        seekBar();
+        //seekBar();
 
         Log.d("MainActivity", "onCreate: Initializing Sensor Service");
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -130,6 +133,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     if (mp == null) {
                         //initalisieren
                         mp = MediaPlayer.create(this, R.raw.sound);
+                        /*context = this.getBaseContext();
+                        am = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+                        am.setMode(AudioManager.STREAM_MUSIC);
+                        am.setSpeakerphoneOn(false);*/
                     }
                     mp.start();
                     isPlaying = true;
@@ -142,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     //wird das Smartphone während des Abspiels in x-Richtung mehr als +/- 10 bewegt, so wird die Nachricht vor- bzw. zurückgespult
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-        Log.d("MainActivity", "onSensorChanged: x: " +  sensorEvent.values[0] + " y: " + sensorEvent.values[1] + " z: " + sensorEvent.values[2]);
+        //Log.d("MainActivity", "onSensorChanged: x: " +  sensorEvent.values[0] + " y: " + sensorEvent.values[1] + " z: " + sensorEvent.values[2]);
         if (sensorEvent.values[2] <= -10){
             if (mp == null) {
                 mp = MediaPlayer.create(this, R.raw.sound);
@@ -158,12 +165,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
         if (sensorEvent.values[0] <= -10){
             if (isPlaying){
-                Log.d("MainActivity", "vorspulen");
+                Log.d("MainActivity", "zurückspulen");
+                mp.seekTo(mp.getCurrentPosition()-10000);
             }
         }
         if (sensorEvent.values[0] > 10){
             if (isPlaying){
-                Log.d("MainActivity", "zurückspulen");
+                Log.d("MainActivity", "vorspulen");
+                mp.seekTo(mp.getCurrentPosition()+10000);
             }
         }
     }
