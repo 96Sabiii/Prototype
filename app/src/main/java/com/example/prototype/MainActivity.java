@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     //Handle button Clicks
     public void ButtonOnClick(View v) {
         switch (v.getId()) {
-            case R.id.playButton:
+            case R.id.play:
                 if(isPlaying)
                 {
                     mp.pause();
@@ -142,6 +142,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     isPlaying = true;
                 }
                 break;
+            case R.id.ff:
+                seekForewar();
+            case R.id.rew:
+                seekRewind();
         }
     }
 
@@ -166,15 +170,23 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         if (sensorEvent.values[0] <= -10){
             if (isPlaying){
                 Log.d("MainActivity", "zurückspulen");
-                mp.seekTo(mp.getCurrentPosition()-10000);
+                seekRewind();
             }
         }
         if (sensorEvent.values[0] > 10){
             if (isPlaying){
                 Log.d("MainActivity", "vorspulen");
-                mp.seekTo(mp.getCurrentPosition()+10000);
+                seekForewar();
             }
         }
+    }
+
+    public void seekForewar() {
+        mp.seekTo(mp.getCurrentPosition()+10000);
+    }
+
+    public void seekRewind() {
+        mp.seekTo(mp.getCurrentPosition()-10000);
     }
 
     @Override
