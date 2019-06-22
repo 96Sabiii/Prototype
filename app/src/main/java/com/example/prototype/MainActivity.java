@@ -132,12 +132,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 else {
                     if (mp == null) {
                         //initalisieren
-                        mp = MediaPlayer.create(this, R.raw.sound);
-                        /*context = this.getBaseContext();
+                        context = this.getBaseContext();
+
                         am = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
                         am.setMode(AudioManager.STREAM_MUSIC);
-                        am.setSpeakerphoneOn(false);*/
+                        mp = MediaPlayer.create(this, R.raw.sound);
+                        mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                        am.setSpeakerphoneOn(true);
                     }
+                    am.setSpeakerphoneOn(false);
                     mp.start();
                     isPlaying = true;
                 }
@@ -158,6 +161,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             if (mp == null) {
                 mp = MediaPlayer.create(this, R.raw.sound);
             }
+            am.setSpeakerphoneOn(false);
             mp.start();
             isPlaying = true;
         }
