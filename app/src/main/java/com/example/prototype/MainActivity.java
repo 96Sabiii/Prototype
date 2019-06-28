@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     MediaPlayer mp;
     SeekBar seekBar;
     SensorManager sensorManager;
-    Sensor accelerometer;
+    Sensor proximitySensor;
     Context context;
     AudioManager am;
 
@@ -69,9 +69,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         Log.d("MainActivity", "onCreate: Initializing Sensor Service");
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        sensorManager.registerListener(MainActivity.this, accelerometer, SensorManager.SENSOR_DELAY_GAME);
-        Log.d("MainActivity", "onCreate: Registered accelerometer listener");
+        proximitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
+        sensorManager.registerListener(MainActivity.this, proximitySensor, SensorManager.SENSOR_DELAY_NORMAL);
+        Log.d("MainActivity", "onCreate: Registered proximity listener");
     }
 
     //Timeline soll im Progress mitlaufen -> Funktioniert nicht
@@ -124,8 +124,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public void ButtonOnClick(View v) {
         switch (v.getId()) {
             case R.id.play:
-                if(isPlaying)
-                {
+                if(isPlaying) {
                     mp.pause();
                     isPlaying = false;
                 }
@@ -140,57 +139,49 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                         mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
                         am.setSpeakerphoneOn(true);
                     }
-                    am.setSpeakerphoneOn(false);
                     mp.start();
                     isPlaying = true;
                 }
                 break;
             case R.id.ff:
-                seekForewar();
+                seekForward();
+                break;
             case R.id.rew:
                 seekRewind();
+                break;
         }
     }
 
-    //sobald das Smartphone in z-Richtung um mehr als +/- 10 bewegt wird, wird die Nachricht abgespielt bzw. gestoppt
-    //wird das Smartphone während des Abspiels in x-Richtung mehr als +/- 10 bewegt, so wird die Nachricht vor- bzw. zurückgespult
+
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-        //Log.d("MainActivity", "onSensorChanged: x: " +  sensorEvent.values[0] + " y: " + sensorEvent.values[1] + " z: " + sensorEvent.values[2]);
-        if (sensorEvent.values[2] <= -10){
-            if (mp == null) {
-                mp = MediaPlayer.create(this, R.raw.sound);
-            }
-            am.setSpeakerphoneOn(false);
-            mp.start();
-            isPlaying = true;
-        }
-        if (sensorEvent.values[2] > 10){
-            if(isPlaying) {
-                mp.pause();
-                isPlaying = false;
-            }
-        }
-        if (sensorEvent.values[0] <= -10){
-            if (isPlaying){
-                Log.d("MainActivity", "zurückspulen");
-                seekRewind();
-            }
-        }
-        if (sensorEvent.values[0] > 10){
-            if (isPlaying){
-                Log.d("MainActivity", "vorspulen");
-                seekForewar();
+        if (isPlaying){
+            if (sensorEvent.sensor.getType() == Sensor.TYPE_PROXIMITY) {
+                if (sensorEvent.values[0] == 0) {
+                    am.setSpeakerphoneOn(false);
+                } else {
+                    am.setSpeakerphoneOn(true);
+                }
             }
         }
     }
 
-    public void seekForewar() {
-        mp.seekTo(mp.getCurrentPosition()+10000);
+    public void seekForward() {
+        if (mp.getCurrentPosition() + 10000 <= mp.getDuration()){
+            mp.seekTo(mp.getCurrentPosition() + 10000);
+        } else {
+            // forward to end
+            mp.seekTo(mp.getDuration());
+        }
     }
 
     public void seekRewind() {
-        mp.seekTo(mp.getCurrentPosition()-10000);
+        if (mp.getCurrentPosition() - 10000 >= 0){
+            mp.seekTo(mp.getCurrentPosition() - 10000);
+        } else {
+            // backward to start
+            mp.seekTo(0);
+        }
     }
 
     @Override
