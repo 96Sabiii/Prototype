@@ -1,4 +1,4 @@
-package com.example.prototype;
+package com.example.prototype2;
 
 public class ListViewItem {
     private String text;
