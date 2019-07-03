@@ -161,6 +161,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     am.setSpeakerphoneOn(false);
                 } else {
                     am.setSpeakerphoneOn(true);
+                    mp.pause();
+                    isPlaying = false;
                 }
             }
         }
