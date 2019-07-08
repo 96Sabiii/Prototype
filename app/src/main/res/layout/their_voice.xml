@@ -47,13 +47,18 @@
                 android:onClick="ButtonOnClick"
                 app:srcCompat="@android:drawable/ic_media_rew" />
 
-            <ImageButton
+            <ToggleButton
                 android:id="@+id/play"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginHorizontal="8dp"
+                android:background="@drawable/ic_toggle"
+                android:textOn=""
+                android:textOff=""
                 android:onClick="ButtonOnClick"
-                app:srcCompat="@android:drawable/ic_media_play" />
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:layout_centerVertical="true"/>
 
             <ImageButton
                 android:id="@+id/ff"
