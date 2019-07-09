@@ -45,27 +45,29 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:onClick="ButtonOnClick"
-                app:srcCompat="@android:drawable/ic_media_rew" />
+                android:background="@drawable/ic_replay_10_black_24dp"
+                android:shadowColor="#666666"/>
 
             <ToggleButton
                 android:id="@+id/play"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:layout_centerVertical="true"
                 android:layout_marginHorizontal="8dp"
                 android:background="@drawable/ic_toggle"
-                android:textOn=""
-                android:textOff=""
-                android:onClick="ButtonOnClick"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
-                android:layout_centerVertical="true"/>
+                android:onClick="ButtonOnClick"
+                android:shadowColor="#00A30000"
+                android:textOff=""
+                android:textOn="" />
 
             <ImageButton
                 android:id="@+id/ff"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:onClick="ButtonOnClick"
-                app:srcCompat="@android:drawable/ic_media_ff" />
+                android:background="@drawable/ic_forward_10_black_24dp" />
 
             <TextView
                 android:layout_width="0dp"
@@ -74,7 +76,7 @@
                 android:text=""/>
 
             <SeekBar
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/seekBar"
                 android:layout_gravity="center"
@@ -83,7 +85,9 @@
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="15dp"
+                android:layout_gravity="center"
+                android:text=""/>
 
         </LinearLayout>
 
