@@ -27,68 +27,62 @@
         android:paddingBottom="4dp"
         android:text="Rose"/>
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/name"
-            android:layout_alignLeft="@+id/name"
-            android:background="@drawable/their_message"
-            android:paddingVertical="10dp"
-            android:paddingHorizontal="10dp"
-            android:elevation="2dp"
-            android:textSize="18dp">
+    <LinearLayout
+        android:layout_width="187dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/name"
+        android:layout_alignLeft="@+id/name"
+        android:background="@drawable/their_message"
+        android:elevation="2dp"
+        android:orientation="horizontal"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="10dp"
+        android:textSize="18dp">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="41dp"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/ic_keyboard_voice" />
 
 
-            <ImageButton
-                android:id="@+id/rew"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:onClick="ButtonOnClick"
-                android:background="@drawable/ic_replay_10_black_24dp"
-                android:shadowColor="#666666"/>
+        <ImageButton
+            android:id="@+id/rew"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/ic_replay_10_black_24dp"
+            android:onClick="ButtonOnClick"
+            android:layout_gravity="center"
+            android:shadowColor="#666666" />
 
-            <ToggleButton
-                android:id="@+id/play"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_centerVertical="true"
-                android:layout_marginHorizontal="8dp"
-                android:background="@drawable/ic_toggle"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:onClick="ButtonOnClick"
-                android:shadowColor="#00A30000"
-                android:textOff=""
-                android:textOn="" />
+        <ImageButton
+            android:id="@+id/play"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_centerVertical="true"
+            android:layout_marginHorizontal="8dp"
+            android:background="@android:drawable/ic_media_play"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:onClick="ButtonOnClick" />
 
-            <ImageButton
-                android:id="@+id/ff"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:onClick="ButtonOnClick"
-                android:background="@drawable/ic_forward_10_black_24dp" />
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:id="@+id/text"
-                android:text=""/>
+        <ImageButton
+            android:id="@+id/ff"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:background="@drawable/ic_forward_10_black_24dp"
+            android:onClick="ButtonOnClick"
+            android:paddingRight="50dp"/>
 
-            <SeekBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/seekBar"
-                android:layout_gravity="center"
-                android:layout_marginLeft="10dp"/>
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="" />
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="15dp"
-                android:layout_gravity="center"
-                android:text=""/>
-
-        </LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>
