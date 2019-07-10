@@ -17,12 +17,13 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
     private ListView listView;
     boolean isPlaying = false;
-    TextView seekBarHint;
+    TextView seekBarHint, duration;
     MediaPlayer mp;
     SeekBar seekBar;
     SensorManager sensorManager;
@@ -63,8 +64,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         //neues Layout da es sonst nicht findet
         RelativeLayout voiceLayout = (RelativeLayout) View.inflate(this, R.layout.their_voice, null);
-        seekBarHint = voiceLayout.findViewById(R.id.textView);
+        //seekBarHint = voiceLayout.findViewById(R.id.textView);
         seekBar = voiceLayout.findViewById(R.id.seekBar);
+        duration = (TextView) voiceLayout.findViewById(R.id.duration);
+        duration.setText("test");
+        Log.d("MainActivity", "onCreate: " + duration.getText());
         //seekBar();
 
         Log.d("MainActivity", "onCreate: Initializing Sensor Service");

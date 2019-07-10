@@ -28,9 +28,9 @@
         android:text="Rose"/>
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:layout_below="@+id/name"
             android:layout_alignLeft="@+id/name"
             android:background="@drawable/their_message"
@@ -39,55 +39,83 @@
             android:elevation="2dp"
             android:textSize="18dp">
 
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <ImageButton
-                android:id="@+id/rew"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:onClick="ButtonOnClick"
-                android:background="@drawable/ic_replay_10_black_24dp"
-                android:shadowColor="#666666"/>
 
-            <ToggleButton
-                android:id="@+id/play"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_centerVertical="true"
-                android:layout_marginHorizontal="8dp"
-                android:background="@drawable/ic_toggle"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:onClick="ButtonOnClick"
-                android:shadowColor="#00A30000"
-                android:textOff=""
-                android:textOn="" />
+                <ImageButton
+                    android:id="@+id/rew"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:onClick="ButtonOnClick"
+                    android:background="@drawable/ic_replay_10_black_24dp"
+                    android:shadowColor="#666666"/>
 
-            <ImageButton
-                android:id="@+id/ff"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:onClick="ButtonOnClick"
-                android:background="@drawable/ic_forward_10_black_24dp" />
+                <ToggleButton
+                    android:id="@+id/play"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginHorizontal="8dp"
+                    android:background="@drawable/ic_toggle"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:onClick="ButtonOnClick"
+                    android:shadowColor="#00A30000"
+                    android:textOff=""
+                    android:textOn="" />
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:id="@+id/text"
-                android:text=""/>
+                <ImageButton
+                    android:id="@+id/ff"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:onClick="ButtonOnClick"
+                    android:background="@drawable/ic_forward_10_black_24dp" />
 
-            <SeekBar
-                android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp"
+                    android:id="@+id/text"
+                    android:text=""/>
+
+                <SeekBar
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/seekBar"
+                    android:layout_gravity="center" />
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center"
+                    android:text=""/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/seekBar"
-                android:layout_gravity="center"
-                android:layout_marginLeft="10dp"/>
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="15dp"
-                android:layout_gravity="center"
-                android:text=""/>
+                <TextView
+                    android:id="@+id/time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp"
+                    android:layout_marginLeft="100dp"
+                    android:text="00:00"/>
+
+                <TextView
+                    android:id="@+id/duration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp"
+                    android:layout_marginLeft="50dp"
+                    android:layout_gravity="end"
+                    android:text="03:06"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
