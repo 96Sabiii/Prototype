@@ -1,4 +1,4 @@
-package com.example.prototype2;
+package com.example.prototype;
 
 import android.widget.TextView;
 

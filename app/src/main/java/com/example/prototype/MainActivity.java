@@ -1,4 +1,4 @@
-package com.example.prototype2;
+package com.example.prototype;
 
 import android.content.Context;
 import android.hardware.Sensor;
@@ -11,22 +11,15 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.SeekBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
     private ListView listView;
     boolean isPlaying = false;
-    TextView seekBarHint;
     MediaPlayer mp;
-    SeekBar seekBar;
     SensorManager sensorManager;
     Sensor proximitySensor;
     Context context;
@@ -39,8 +32,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        setContentView(R.layout.activity_main); // here, you can create a single layout with a listview
 
         //Create "Chat"
         listView = (ListView) findViewById(R.id.messages_view);
@@ -55,15 +46,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         CustomAdapter customAdapter = new CustomAdapter(this, R.id.text, items);
         listView.setAdapter(customAdapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView adapterView, View view, int i, long l) {
-                //Toast.makeText(getBaseContext(), items[i].getText(), Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        //neues Layout da es sonst nicht findet
-        RelativeLayout voiceLayout = (RelativeLayout) View.inflate(this, R.layout.their_voice, null);
 
         Log.d("MainActivity", "onCreate: Initializing Sensor Service");
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -82,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 }
                 else {
                     if (mp == null) {
-                        //initalisieren
+                        //initialise
                         context = this.getBaseContext();
 
                         am = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);

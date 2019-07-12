@@ -25,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="4dp"
-        android:text="Rose"/>
+        android:text="@string/chat_partner"/>
 
     <LinearLayout
         android:layout_width="187dp"
@@ -37,14 +37,14 @@
         android:orientation="horizontal"
         android:paddingHorizontal="10dp"
         android:paddingVertical="10dp"
-        android:textSize="18dp">
+        android:textSize="18sp">
 
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginRight="30dp"
             android:src="@drawable/ic_keyboard_voice"
-            android:tint="#6E6E6E"/>
+            android:tint="@color/colorPrimary"/>
 
         <ImageButton
             android:id="@+id/rew"
@@ -62,7 +62,7 @@
             android:layout_gravity="center"
             android:layout_centerVertical="true"
             android:layout_marginHorizontal="8dp"
-            android:background="@android:drawable/ic_media_play"
+            android:background="@drawable/ic_play_40"
             android:focusable="false"
             android:focusableInTouchMode="false"
             android:onClick="ButtonOnClick" />
