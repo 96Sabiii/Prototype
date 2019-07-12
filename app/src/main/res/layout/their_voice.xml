@@ -40,11 +40,11 @@
         android:textSize="18dp">
 
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="41dp"
-            android:layout_marginRight="20dp"
-            android:src="@drawable/ic_keyboard_voice" />
-
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="30dp"
+            android:src="@drawable/ic_keyboard_voice"
+            android:tint="#6E6E6E"/>
 
         <ImageButton
             android:id="@+id/rew"
@@ -66,7 +66,6 @@
             android:focusable="false"
             android:focusableInTouchMode="false"
             android:onClick="ButtonOnClick" />
-
 
         <ImageButton
             android:id="@+id/ff"

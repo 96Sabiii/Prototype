@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -95,10 +96,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 }
                 break;
             case R.id.ff:
-                seekForward();
+                if(isPlaying){
+                    seekForward();
+                }
                 break;
             case R.id.rew:
-                seekRewind();
+                if (isPlaying){
+                    seekRewind();
+                }
                 break;
         }
     }
@@ -127,6 +132,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             mp.seekTo(mp.getDuration());
         }
         Toast t1 = Toast.makeText(this, "10 Sekunden vorgespult", Toast.LENGTH_SHORT-2000);
+        t1.setGravity(0,0,270);
         t1.show();
     }
 
@@ -138,6 +144,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             mp.seekTo(0);
         }
         Toast t2= Toast.makeText(this, "10 Sekunden zurück gespult", Toast.LENGTH_SHORT-2000);
+        t2.setGravity(0,0,270);
         t2.show();
     }
 
