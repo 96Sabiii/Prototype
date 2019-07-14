@@ -18,7 +18,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
     private ListView listView;
-    boolean isPlaying = false;
+    boolean isPlaying = false, createdAudio = false;
     MediaPlayer mp;
     SensorManager sensorManager;
     Sensor proximitySensor;
@@ -75,15 +75,16 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     }
                     mp.start();
                     isPlaying = true;
+                    createdAudio = true;
                 }
                 break;
             case R.id.ff:
-                if(isPlaying){
+                if(createdAudio){
                     seekForward();
                 }
                 break;
             case R.id.rew:
-                if (isPlaying){
+                if (createdAudio){
                     seekRewind();
                 }
                 break;
