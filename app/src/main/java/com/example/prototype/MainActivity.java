@@ -1,4 +1,4 @@
-package com.example.prototype2;
+package com.example.prototype;
 
 import android.content.Context;
 import android.hardware.Sensor;
@@ -12,19 +12,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.SeekBar;
-import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
     private ListView listView;
     boolean isPlaying = false;
-    TextView seekBarHint;
     MediaPlayer mp;
-    SeekBar seekBar;
     SensorManager sensorManager;
     Sensor proximitySensor;
     Context context;
@@ -38,86 +33,25 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        setContentView(R.layout.activity_main); // here, you can create a single layout with a listview
-
         //Create "Chat"
         listView = (ListView) findViewById(R.id.messages_view);
 
-        final ListViewItem[] items = new ListViewItem[7];
-        items[0] = new ListViewItem("Hi", CustomAdapter.TYPE_THEIR);
-        items[1] = new ListViewItem("Hi", CustomAdapter.TYPE_MY);
-        items[2] = new ListViewItem("wie gehts?", CustomAdapter.TYPE_THEIR);
-        items[3] = new ListViewItem("gut und dir?", CustomAdapter.TYPE_MY);
-        items[4] = new ListViewItem("muss dir unbedingt was erzählen", CustomAdapter.TYPE_THEIR);
-        items[5] = new ListViewItem("aber das darf sonst keiner wissen, ok?", CustomAdapter.TYPE_THEIR);
-        items[6] = new ListViewItem("", CustomAdapter.TYPE_THEIR_VOICE);
+        final ListViewItem[] items = new ListViewItem[6];
+        items[0] = new ListViewItem("Hi", CustomAdapter.TYPE_MY);
+        items[1] = new ListViewItem("Hi, wie gehts?", CustomAdapter.TYPE_THEIR);
+        items[2] = new ListViewItem("gut und dir?", CustomAdapter.TYPE_MY);
+        items[3] = new ListViewItem("muss dir unbedingt was erzählen", CustomAdapter.TYPE_THEIR);
+        items[4] = new ListViewItem("aber das darf sonst keiner wissen, ok?", CustomAdapter.TYPE_THEIR);
+        items[5] = new ListViewItem("", CustomAdapter.TYPE_THEIR_VOICE);
 
         CustomAdapter customAdapter = new CustomAdapter(this, R.id.text, items);
         listView.setAdapter(customAdapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView adapterView, View view, int i, long l) {
-                //Toast.makeText(getBaseContext(), items[i].getText(), Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        //neues Layout da es sonst nicht findet
-        RelativeLayout voiceLayout = (RelativeLayout) View.inflate(this, R.layout.their_voice, null);
-        seekBarHint = voiceLayout.findViewById(R.id.textView);
-        seekBar = voiceLayout.findViewById(R.id.seekBar);
-        //seekBar();
 
         Log.d("MainActivity", "onCreate: Initializing Sensor Service");
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         proximitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
         sensorManager.registerListener(MainActivity.this, proximitySensor, SensorManager.SENSOR_DELAY_NORMAL);
         Log.d("MainActivity", "onCreate: Registered proximity listener");
-    }
-
-    //Timeline soll im Progress mitlaufen -> Funktioniert nicht
-    //https://www.journaldev.com/22203/android-media-player-song-with-seekbar
-    public void seekBar() {
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-                seekBarHint.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromTouch) {
-                seekBarHint.setVisibility(View.VISIBLE);
-                int x = (int) Math.ceil(progress / 1000f);
-
-                if (x < 10)
-                    seekBarHint.setText("0:0" + x);
-                else
-                    seekBarHint.setText("0:" + x);
-
-                double percent = progress / (double) seekBar.getMax();
-                int offset = seekBar.getThumbOffset();
-                int seekWidth = seekBar.getWidth();
-                int val = (int) Math.round(percent * (seekWidth - 2 * offset));
-                int labelWidth = seekBarHint.getWidth();
-                seekBarHint.setX(offset + seekBar.getX() + val
-                        - Math.round(percent * offset)
-                        - Math.round(percent * labelWidth / 2));
-
-                if (progress > 0 && mp != null && !mp.isPlaying()) {
-                    //clearMediaPlayer();
-                    //playButton.setImageDrawable(ContextCompat.getDrawable(MainActivity.this, android.R.drawable.ic_media_play));
-                    MainActivity.this.seekBar.setProgress(0);
-                }
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                if (mp != null && mp.isPlaying()) {
-                    mp.seekTo(seekBar.getProgress());
-                }
-            }
-        });
     }
 
     //Handle button Clicks
@@ -130,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 }
                 else {
                     if (mp == null) {
-                        //initalisieren
+                        //initialise
                         context = this.getBaseContext();
 
                         am = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
@@ -144,10 +78,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 }
                 break;
             case R.id.ff:
-                seekForward();
+                if(isPlaying){
+                    seekForward();
+                }
                 break;
             case R.id.rew:
-                seekRewind();
+                if (isPlaying){
+                    seekRewind();
+                }
                 break;
         }
     }
@@ -175,6 +113,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             // forward to end
             mp.seekTo(mp.getDuration());
         }
+        Toast t1 = Toast.makeText(this, "10 Sekunden vorgespult", Toast.LENGTH_SHORT-2000);
+        t1.setGravity(0,0,270);
+        t1.show();
     }
 
     public void seekRewind() {
@@ -184,6 +125,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             // backward to start
             mp.seekTo(0);
         }
+        Toast t2= Toast.makeText(this, "10 Sekunden zurück gespult", Toast.LENGTH_SHORT-2000);
+        t2.setGravity(0,0,270);
+        t2.show();
     }
 
     @Override

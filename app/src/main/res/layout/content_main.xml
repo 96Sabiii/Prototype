@@ -5,17 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.prototype2.MainActivity"
+    tools:context="com.example.prototype.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clipToPadding="false"
         android:focusableInTouchMode="true"
         android:orientation="vertical"
-        tools:context="com.example.prototype2.MainActivity"
+        tools:context="com.example.prototype.MainActivity"
         tools:ignore="MissingConstraints">
 
         <ListView
@@ -23,29 +22,29 @@
             android:id="@+id/messages_view"
             android:layout_weight="2"
             android:divider="#fff"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content" />
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="bottom|end"
             android:background="#fff"
             android:orientation="horizontal">
 
             <EditText
                 android:id="@+id/editText"
-                android:layout_width="match_parent"
+                android:layout_width="370dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:ems="10"
-                android:hint="Write a message"
+                android:hint="@string/text_input"
                 android:inputType="text"
                 android:paddingHorizontal="10dp"
                 android:text="" />
 
             <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:layout_gravity="center"
                 android:scaleType="fitCenter"
                 android:padding="20dp"
