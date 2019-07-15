@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             // backward to start
             mp.seekTo(0);
         }
-        Toast t2= Toast.makeText(this, "10 Sekunden zurück gespult", Toast.LENGTH_SHORT-2000);
+        Toast t2= Toast.makeText(this, "10 Sekunden zurückgespult", Toast.LENGTH_SHORT-2000);
         t2.setGravity(0,0,270);
         t2.show();
     }
